@@ -30,7 +30,13 @@ const DetailSeason = ({ air_date, episode_count, id, name, overview, poster_path
         <Image 
         bgUrl={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : require("../assets/noPosterSmall.png").default} 
         />
-        <Title>{name} ({air_date.substring(0, 4)}) </Title>
+        <Title>{name} 
+        {air_date ? (
+         ` (${air_date.substring(0, 4)})`
+        )
+        : ""}
+        </Title>
+       
      
     </Container>
 );

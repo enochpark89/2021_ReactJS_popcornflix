@@ -6,7 +6,8 @@ import Helmet from "react-helmet";
 import Section from "Components/Section";
 import DetailSection from "Components/DetailSection";
 import DetailSeason from "Components/DetailSeason";
-
+import ActorSection from "Components/ActorSection";
+import ReactPlayer from "react-player/youtube";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -109,8 +110,20 @@ const HeaderItem = styled.li`
 
 `;
 
+const PlayerWrapper = styled.div`
+  height:280px;
+  width: 500px;
+  background-size: cover;
+  border-radius: 4px;
+  background-position: center center;
+  margin: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: blue;
+`;
 
-const DetailPresenter = ({  result, result2, loading, error }) =>
+
+const DetailPresenter = ({  result, result_two, videos, loading, error }) =>
   loading ? (
     <>
       <Helmet>
@@ -168,8 +181,7 @@ const DetailPresenter = ({  result, result2, loading, error }) =>
                  <a href={`https://www.imdb.com/title/${result.imdb_id}/`} target="_blank"><img class="pri_image" src="https://m.media-amazon.com/images/G/01/IMDb/BG_rectangle._CB1509060989_SY230_SX307_AL_.png" width="64" height="32"></img></a>
               ) : ""
 
-              }
-              
+              }   
             </Item>
           </ItemContainer>
           {/* <HeaderList>
@@ -183,7 +195,32 @@ const DetailPresenter = ({  result, result2, loading, error }) =>
                 Trailer
               </HeaderItem>
           </HeaderList> */}
- 
+              { videos.results[0] ? (
+              <Section title="Trailer video">
+                <PlayerWrapper>
+    
+                <ReactPlayer url={`https://www.youtube.com/watch?v=${videos.results[0].key}`} width='100%'
+          height='100%'/>
+                </PlayerWrapper>
+              </Section>
+              ) : ""
+              }
+
+              { result_two.cast ? (
+              <Section title="Actors">
+               
+                {result_two.cast.map(cast => (
+                  <ActorSection
+                  profile_path={cast.profile_path}
+                  original_name={cast.original_name}
+                  character={cast.character }
+                  />
+                    
+                  ))}
+              </Section>
+              ) : ""}
+          
+
               <Section title="Production Companies">
               {result.production_companies.map(production_companies => (
                 <DetailSection
@@ -223,7 +260,8 @@ const DetailPresenter = ({  result, result2, loading, error }) =>
   );
 DetailPresenter.propTypes = {
   result: PropTypes.object,
-  result2: PropTypes.object,
+  result_two: PropTypes.object,
+  videos: PropTypes.object,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string
 };

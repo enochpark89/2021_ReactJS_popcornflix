@@ -10,7 +10,8 @@ export default class extends React.Component {
     } = props;
     this.state = {
       result: null,
-      result2: null,
+      result_two: null,
+      videos: null,
       error: null,
       loading: true,
       isMovie: pathname.includes("/movie/")
@@ -31,26 +32,29 @@ export default class extends React.Component {
       return push("/");
     }
     let result = null;
-    let result2 = null;
+    let result_two = null;
+    let videos = null; 
     try {
       if (isMovie) {
         ({ data: result } = await moviesApi.movieDetail(parsedId));
-        ({ result2: result2 } = await moviesApi.movieCredits(parsedId));
+        ({ data: result_two } = await moviesApi.Credits(parsedId));
+        ({ data: videos } = await moviesApi.Videos(parsedId));
       } else {
         ({ data: result } = await tvApi.showDetail(parsedId));
-
+        ({ data: result_two } = await tvApi.Credits(parsedId));
+        ({ data: videos } = await tvApi.Videos(parsedId));
       }
-      console.log(result)
+   
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ loading: false, result });
+      this.setState({ loading: false, result, result_two, videos});
     }
   }
 
 
   render() {
-    const { result, error, loading, result2 } = this.state;
-    return <DetailPresenter result={result} result2={result2} error={error} loading={loading} />;
+    const { result, result_two, videos,  error, loading,  } = this.state;
+    return <DetailPresenter result={result} result_two={result_two} videos={videos} error={error} loading={loading} />;
   }
 }
