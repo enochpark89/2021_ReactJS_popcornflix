@@ -208,7 +208,6 @@ const DetailPresenter = ({  result, result_two, videos, loading, error }) =>
 
               { result_two.cast ? (
               <Section title="Actors">
-               
                 {result_two.cast.map(cast => (
                   <ActorSection
                   profile_path={cast.profile_path}
