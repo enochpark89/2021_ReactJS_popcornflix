@@ -50,7 +50,7 @@ const HomePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
                         title={movie.original_title}
                         rating={movie.vote_average}
                         year={
-                           movie.release_date.substring(0, 4)
+                           movie.release_date
                               ? movie.release_date.substring(0, 4)
                               : movie.release_date
                         }
@@ -69,7 +69,7 @@ const HomePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
                         title={movie.original_title}
                         rating={movie.vote_average}
                         year={
-                           movie.release_date.substring(0, 4)
+                           movie.release_date
                               ? movie.release_date.substring(0, 4)
                               : movie.release_date
                         }
